@@ -15,13 +15,56 @@
 </head>
 <body>
 <header class="header"></header>
-<main>
+<main class="main">
+  <section class="filters">
+    <h2 class="filters__header">Filters</h2>
 
+    <div class="filters__item cards-type">
+      <h3 class="cards-type__title">Вид приложения: </h3>
+      <div class="cards-type__vote vote">
+        <label class="vote__container"> Card
+          <input type="radio" checked="checked" name="radio" value="0">
+          <span class="vote__checkmark"></span>
+        </label>
+        <label class="vote__container"> Tree list
+          <input type="radio" checked="checked" name="radio" value="4">
+          <span class="vote__checkmark"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="filters__item sort">
+      <h3 class="sort__title">Сортировать: </h3>
+      <div class="sort__vote vote">
+        <label class="vote__container"> Category
+          <input type="radio" checked="checked" name="radio" value="0">
+          <span class="vote__checkmark"></span>
+        </label>
+        <label class="vote__container"> Date
+          <input type="radio" checked="checked" name="radio" value="4">
+          <span class="vote__checkmark"></span>
+        </label>
+        <label class="vote__container">Name
+          <input type="radio" checked="checked" name="radio" value="7">
+          <span class="vote__checkmark"></span>
+        </label>
+        <label class="vote__container">Size
+          <input type="radio" checked="checked" name="radio" value="8">
+          <span class="vote__checkmark"></span>
+        </label>
+      </div>
+    </div>
+
+    <form action="" class="filters__form">
+      <button type="submit" class="filters__form-button">Reset</button>
+    </form>
+  </section>
   <section class="cards">
     <div class="cards__item card">
       <button type="button" class="card__close"><i class="fas fa-times"></i></button>
       <img class="card__img" src="https://lh3.googleusercontent.com/proxy/MH9p76xVWIVHREVaS6RhpvaXUfUvhBI4AzT7QB7jgfsAxHlgaEnhObhpJpl_-UNpmpzNIXNmiOSSbjcOpHjET7FVj4o" alt="">
       <ul class="card__info cards-info">
+        <li class="card-info__item"><span>Name:</span> <span class="card__info-category">Bee</span></li>
         <li class="card-info__item"><span>Category:</span> <span class="card__info-category">Animals</span></li>
         <li class="card-info__item"><span>Date:</span> <span class="card__info-date">24 03 2</span></li>
         <li class="card-info__item"><span>Size:</span> <span class="card__info-size">74353</span></li>
