@@ -11,6 +11,7 @@
         rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="./style.css">
+  <script type="module" src="index.js"></script>
   <title>Elecard</title>
 </head>
 <body>
@@ -23,11 +24,11 @@
       <h3 class="cards-type__title">Вид приложения: </h3>
       <div class="cards-type__vote vote">
         <label class="vote__container"> Card
-          <input type="radio" checked="checked" name="radio" value="0">
+          <input type="radio" checked="checked" name="cards-type" value="card">
           <span class="vote__checkmark"></span>
         </label>
         <label class="vote__container"> Tree list
-          <input type="radio" checked="checked" name="radio" value="4">
+          <input type="radio" checked="checked" name="cards-type" value="tree-list">
           <span class="vote__checkmark"></span>
         </label>
       </div>
@@ -37,19 +38,19 @@
       <h3 class="sort__title">Сортировать: </h3>
       <div class="sort__vote vote">
         <label class="vote__container"> Category
-          <input type="radio" checked="checked" name="radio" value="0">
+          <input type="radio" checked="checked" name="sort" value="category">
           <span class="vote__checkmark"></span>
         </label>
         <label class="vote__container"> Date
-          <input type="radio" checked="checked" name="radio" value="4">
+          <input type="radio" checked="checked" name="sort" value="date">
           <span class="vote__checkmark"></span>
         </label>
         <label class="vote__container">Name
-          <input type="radio" checked="checked" name="radio" value="7">
+          <input type="radio" checked="checked" name="sort" value="name">
           <span class="vote__checkmark"></span>
         </label>
         <label class="vote__container">Size
-          <input type="radio" checked="checked" name="radio" value="8">
+          <input type="radio" checked="checked" name="sort" value="size">
           <span class="vote__checkmark"></span>
         </label>
       </div>
@@ -60,18 +61,8 @@
     </form>
   </section>
   <section class="cards">
-    <div class="cards__item card">
-      <button type="button" class="card__close"><i class="fas fa-times"></i></button>
-      <img class="card__img" src="https://lh3.googleusercontent.com/proxy/MH9p76xVWIVHREVaS6RhpvaXUfUvhBI4AzT7QB7jgfsAxHlgaEnhObhpJpl_-UNpmpzNIXNmiOSSbjcOpHjET7FVj4o" alt="">
-      <ul class="card__info cards-info">
-        <li class="card-info__item"><span>Name:</span> <span class="card__info-category">Bee</span></li>
-        <li class="card-info__item"><span>Category:</span> <span class="card__info-category">Animals</span></li>
-        <li class="card-info__item"><span>Date:</span> <span class="card__info-date">24 03 2</span></li>
-        <li class="card-info__item"><span>Size:</span> <span class="card__info-size">74353</span></li>
-      </ul>
-    </div>
-
   </section>
+  <div class="pagination__wrapper"></div>
 </main>
 <footer></footer>
 </body>
