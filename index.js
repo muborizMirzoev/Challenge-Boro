@@ -2,6 +2,7 @@ import {PaginationButton} from './js/pagination.js'
 
 const cardsElement = document.querySelector('.cards');
 const resetButton = document.querySelector('.reset-button');
+const sortVoteElement = document.querySelector('.sort__vote');
 
 const baseUlr = 'http://contest.elecard.ru/frontend_data/';
 
@@ -15,17 +16,15 @@ async function fetchCards(url) {
          throw new TypeError("Ой, мы не получили JSON!");
       }
       cards = await response.json();
-      console.log(cards)
-      renderCards(cards);
+      return cards;
    } catch (error) {
       console.log(error);
    }
 }
 
-fetchCards(`${baseUlr}catalog.json`);
+// sortCards();
 
 async function sortCards(type = 'category') {
-
    try {
       cards = await fetchCards(`${baseUlr}catalog.json`);
    } catch (error) {
@@ -46,11 +45,8 @@ async function sortCards(type = 'category') {
          cards.sort((a, b) => parseName(a.image) > parseName(b.image) ? 1 : -1);
          break;
    }
-
    renderCards(cards)
 }
-
-// sortCards('name');
 
 
 const paginationButtons = new PaginationButton(33, 10);
@@ -67,6 +63,7 @@ function renderCards(cards, page = 1) {
 
    console.log(showCardsFrom, showCardsTo)
 
+   cardsElement.innerHTML = '';
    for (let i = showCardsFrom; i <= showCardsTo; i++) {
       const card = cards[i];
       const name = parseName(card.image);
@@ -90,9 +87,6 @@ function renderCards(cards, page = 1) {
       </div>`
    }
 }
-
-cardsElement.addEventListener('click', removeCards);
-resetButton.addEventListener('click', reset);
 
 function reset() {
    localStorage.clear()
@@ -128,26 +122,6 @@ function getFromLocalStorage(key) {
    return JSON.parse(localStorage.getItem(key)) || [];
 }
 
-// function updateLocalStorage() {
-//    const deleteCards = [];
-//    return function () {
-//
-//       [...cardsItemElement].forEach(card => {
-//          card.addEventListener('click', event => {
-//             const closeButton = event.target.closest('.card__close');
-//
-//             if (closeButton) {
-//                const id = closeButton.dataset.id;
-//                deleteCards.push(id);
-//                localStorage.setItem('deleteCards', JSON.stringify(deleteCards));
-//                event.currentTarget.remove();
-//             }
-//          });
-//       });
-//    }
-// }
-
-
 function parseName(str) {
    let array = str.split('/');
    let name = array[1].match(/[a-z]+/g);
@@ -181,3 +155,13 @@ function capitalize(str) {
    return str[0].toUpperCase() + str.slice(1);
 }
 
+function changeSortType(event) {
+   const type = event.target.value;
+   sortCards(type);
+}
+
+cardsElement.addEventListener('click', removeCards);
+resetButton.addEventListener('click', reset);
+sortVoteElement.addEventListener('change', changeSortType);
+
+document.addEventListener("DOMContentLoaded", changeSortType);
