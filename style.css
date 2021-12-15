@@ -85,6 +85,35 @@ body {
     border-radius: 2px;
     cursor: pointer;
     box-shadow: 0 19px 38px rgb(49 18 63), 0 15px 12px rgb(49 18 63);
+    transition: transform .2s ease-in-out;
+}
+
+.card.hide {
+    display: none;
+}
+
+.cards__item.removed {
+    animation: 0.3s ease-in-out 0.1s remove;
+}
+
+@keyframes remove {
+    from {
+        transform: scale(1, 1);
+    }
+
+    30% {
+        transform: scale(1.1, 1.1);
+    }
+
+    99% {
+        transform: scale(0, 0);
+        height: 0;
+    }
+
+    to {
+        height: 0;
+        opacity: 0;
+    }
 }
 
 .card__close {
@@ -95,7 +124,7 @@ body {
     cursor: pointer;
     font-size: 20px;
     padding: 5px 10px;
-    border-radius: 0 2px 0 0 ;
+    border-radius: 0 2px 0 0;
     color: gray;
 }
 
@@ -118,7 +147,7 @@ body {
     margin-bottom: 8px;
 }
 
-.card-info__item span:first-child{
+.card-info__item span:first-child {
     opacity: .5;
     padding-right: 10px;
     text-transform: uppercase;

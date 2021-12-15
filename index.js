@@ -1,8 +1,7 @@
 import {PaginationButton} from './js/pagination.js'
 
 const cardsElement = document.querySelector('.cards');
-let cardsItemElement = document.getElementsByClassName('cards__item'); // because it return live collection
-let cardCloseElement = document.getElementsByClassName('card__close'); // because it return live collection
+const resetButton = document.querySelector('.reset-button');
 
 const baseUlr = 'http://contest.elecard.ru/frontend_data/';
 
@@ -93,6 +92,11 @@ function renderCards(cards, page = 1) {
 }
 
 cardsElement.addEventListener('click', removeCards);
+resetButton.addEventListener('click', reset);
+
+function reset() {
+   localStorage.clear()
+}
 
 function removeCards(event) {
    const closeButtonElement = event.target.closest('.card__close');
@@ -101,10 +105,18 @@ function removeCards(event) {
    const deleteCards = getFromLocalStorage('deleteCards');
 
    if (closeButtonElement) {
+      cardsItemElement.classList.add('removed');
+      cardsItemElement.addEventListener('animationend', () => {
+         cardsItemElement.classList.add('hide')
+      });
+
       const id = closeButtonElement.dataset.id;
       deleteCards.push(id);
-      setToLocalStorage('deleteCards', deleteCards)
-      cardsItemElement.remove();
+      setToLocalStorage('deleteCards', deleteCards);
+
+      setTimeout(() => {
+         cardsItemElement.remove();
+      }, 1000)
    }
 }
 
