@@ -208,7 +208,7 @@ body {
 
 /*Pagination*/
 .pagination__wrapper {
-
+    margin-bottom: 20px;
 }
 
 .page-btn {
