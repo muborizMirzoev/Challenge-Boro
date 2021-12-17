@@ -77,11 +77,11 @@ function renderCards(cards, page = 1) {
       cardsElement.innerHTML += `
       <div class="cards__item card">
         <button type="button" class="card__close" data-id="${card.timestamp}" ><i class="fas fa-times"></i></button>
-        <img class="card__img" src="${baseUlr + card.image}" alt="">
+        <img class="card__img" src="${baseUlr + card.image}" alt="${name}">
         <ul class="card__info cards-info">
           <li class="card-info__item"><span>Name:</span> <span class="card__info-category">${name}</span></li>
           <li class="card-info__item"><span>Category:</span> <span class="card__info-category">${category}</span></li>
-          <li class="card-info__item"><span>Date:</span> <span class="card__info-date">${date}</span></li>
+          <li class="card-info__item"><span>Date:</span> <time class="card__info-date">${date}</time></li>
           <li class="card-info__item"><span>Size:</span> <span class="card__info-size">${size}</span></li>
         </ul>
       </div>`
@@ -165,3 +165,13 @@ resetButton.addEventListener('click', reset);
 sortVoteElement.addEventListener('change', changeSortType);
 
 document.addEventListener("DOMContentLoaded", changeSortType);
+
+document.querySelectorAll('.trigger').forEach(parent => {
+   parent.addEventListener('click', (event) => {
+      event.preventDefault()
+      for (let sibling of event.currentTarget.parentNode.children) {
+         sibling.classList.toggle('open');
+         sibling.firstChild.classList.toggle('caret-down')
+      }
+   });
+})
