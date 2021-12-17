@@ -351,6 +351,10 @@ body {
     flex-wrap: wrap;
 }
 
+.tree-item__flex img {
+    cursor: pointer;
+}
+
 .tree-item a i {
     margin-right: 0.5rem;
     color: #3498db;
@@ -370,4 +374,72 @@ body {
 
 .caret-down::before {
     transform: rotate(90deg);
+}
+
+
+/*POPUP*/
+
+.popup__container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    background-color: rgba(0, 0, 0, .5);
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+.popup__container.hidden {
+    display: none;
+}
+
+.popup {
+    position: relative;
+    max-height: 100vh;
+    max-width: 80vw;
+    overflow: auto;
+    color: #ffffff;
+    background-color: #12051e;
+}
+
+.popup__close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.6rem;
+    color: #e3dede;
+    background-color: transparent;
+}
+
+.popup__close:hover,
+.popup__close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@-webkit-keyframes zoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
 }

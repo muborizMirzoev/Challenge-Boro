@@ -171,7 +171,29 @@ document.querySelectorAll('.trigger').forEach(parent => {
       event.preventDefault()
       for (let sibling of event.currentTarget.parentNode.children) {
          sibling.classList.toggle('open');
-         sibling.firstChild.classList.toggle('caret-down')
+         sibling.querySelector('.caret').classList.toggle('caret-down');
       }
    });
 })
+
+const popupContainerElement = document.querySelector('.popup__container');
+const popupElement = document.querySelector('.popup');
+const treeItemPopupElements = document.querySelectorAll('.tree-item__popup');
+
+treeItemPopupElements.forEach(image => {
+   image.addEventListener('click', () => {
+      popupContainerElement.classList.remove('hidden');
+      popupElement.innerHTML = `
+      <button type="button" class="popup__close"><i class="fas fa-times"></i></button>
+      <img src="http://contest.elecard.ru/frontend_data/animals/bee-5749361__480.jpg" alt="Parent">
+   `
+   });
+})
+
+
+document.body.addEventListener('click', (event) => {
+   if (event.target.closest('.popup__close') || event.target.classList.contains('popup__container')) {
+      popupContainerElement.classList.add('hidden');
+   }
+})
+
