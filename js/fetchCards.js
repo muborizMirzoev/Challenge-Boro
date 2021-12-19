@@ -1,8 +1,6 @@
-export default class FetchData {
-   constructor(url) {
-      this.url = url;
-      this.data = [];
-
+class FetchCards {
+   constructor() {
+      this.cards = [];
    }
 
    async makeRequest(url) {
@@ -12,16 +10,13 @@ export default class FetchData {
          if (!contentType || !contentType.includes('application/json')) {
             throw new TypeError("Ой, мы не получили JSON!");
          }
-         return await response.json()
+         this.cards = await response.json();
+         return this.cards;
       } catch (error) {
-         console.log(error);
+         console.error(error);
       }
    }
-
-
-   getCards() {
-      return this.makeRequest(this.url).then(cards => this.data = cards)
-   }
-
-
 }
+
+export default FetchCards;
+
