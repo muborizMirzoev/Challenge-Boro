@@ -3,6 +3,7 @@ import {PaginationButton} from './js/pagination.js'
 const cardsElement = document.querySelector('.cards');
 const resetButton = document.querySelector('.reset-button');
 const sortVoteElement = document.querySelector('.sort__vote');
+const treeElement = document.querySelector('.tree');
 
 const baseUlr = 'http://contest.elecard.ru/frontend_data/';
 
@@ -54,16 +55,17 @@ paginationButtons.render();
 paginationButtons.onChange(e => {
    console.log('paginationButtons', e.target.value);
    cardsElement.innerHTML = '';
+   treeElement.innerHTML = '';
    renderCards(cards, e.target.value);
 });
 
-function renderCards(cards, page = 1) {
+function renderCards(cards, page = 1, cardsType = 'tree-list') {
    const showCardsFrom = ((page - 1) * 20)
    const showCardsTo = page * 20 - 1;
 
-   console.log(showCardsFrom, showCardsTo)
 
    cardsElement.innerHTML = '';
+   treeElement.innerHTML = '';
    for (let i = showCardsFrom; i <= showCardsTo; i++) {
       const card = cards[i];
       const name = parseName(card.image);
@@ -74,17 +76,51 @@ function renderCards(cards, page = 1) {
       const deleteCards = getFromLocalStorage('deleteCards');
       if (deleteCards.includes(String(card.timestamp))) continue
 
-      cardsElement.innerHTML += `
-      <div class="cards__item card">
-        <button type="button" class="card__close" data-id="${card.timestamp}" ><i class="fas fa-times"></i></button>
-        <img class="card__img" src="${baseUlr + card.image}" alt="${name}">
-        <ul class="card__info cards-info">
-          <li class="card-info__item"><span>Name:</span> <span class="card__info-category">${name}</span></li>
-          <li class="card-info__item"><span>Category:</span> <span class="card__info-category">${category}</span></li>
-          <li class="card-info__item"><span>Date:</span> <time class="card__info-date">${date}</time></li>
-          <li class="card-info__item"><span>Size:</span> <span class="card__info-size">${size}</span></li>
-        </ul>
-      </div>`
+      if (cardsType === 'card') {
+         cardsElement.innerHTML += `
+         <div class="cards__item card">
+           <button type="button" class="card__close" data-id="${card.timestamp}" ><i class="fas fa-times"></i></button>
+           <img class="card__img" src="${baseUlr + card.image}" alt="${name}">
+           <ul class="card__info cards-info">
+             <li class="card-info__item"><span>Name:</span> <span class="card__info-category">${name}</span></li>
+             <li class="card-info__item"><span>Category:</span> <span class="card__info-category">${category}</span></li>
+             <li class="card-info__item"><span>Date:</span> <time class="card__info-date">${date}</time></li>
+             <li class="card-info__item"><span>Size:</span> <span class="card__info-size">${size}</span></li>
+           </ul>
+         </div>`
+      } else if (cardsType === 'tree-list') {
+         treeElement.innerHTML += `
+            <li class="tree-item">
+            <p class="trigger"><span class="caret">${name}</span></p>
+            <ul class="tree-parent">
+              <li class="tree-item">
+                <div class="tree-item__flex">
+                  <span>PHOTO:</span>
+                  <img class="tree-item__popup" src="${baseUlr + card.image}" alt="${name}" width="70px" height="50px">
+                </div>
+              </li>
+              <li class="tree-item">
+                <div class="tree-item__flex">
+                  <span>CATEGORY:</span>
+                  <span>${category}</span>
+                </div>
+              </li>
+              <li class="tree-item">
+                <div class="tree-item__flex">
+                  <span>DATE:</span>
+                  <time>${date}</time>
+                </div>
+              </li>
+              <li class="tree-item">
+                <div class="tree-item__flex">
+                  <span>SIZE:</span>
+                  <time>${size}</time>
+                </div>
+              </li>
+            </ul>
+          </li>
+         `
+      }
    }
 }
 
@@ -160,36 +196,34 @@ function changeSortType(event) {
    sortCards(type);
 }
 
-cardsElement.addEventListener('click', removeCards);
-resetButton.addEventListener('click', reset);
-sortVoteElement.addEventListener('change', changeSortType);
+function treeElementClickHandler(event) {
+   const trigger = event.target.closest('.trigger');
+   const treeItemPopup = event.target.closest('.tree-item__popup');
 
-document.addEventListener("DOMContentLoaded", changeSortType);
+   if (trigger) {
+      trigger.nextElementSibling.classList.toggle('open');
+      trigger.firstElementChild.classList.toggle('caret-down');
+   }
 
-document.querySelectorAll('.trigger').forEach(parent => {
-   parent.addEventListener('click', (event) => {
-      event.preventDefault()
-      for (let sibling of event.currentTarget.parentNode.children) {
-         sibling.classList.toggle('open');
-         sibling.querySelector('.caret').classList.toggle('caret-down');
-      }
-   });
-})
-
-const popupContainerElement = document.querySelector('.popup__container');
-const popupElement = document.querySelector('.popup');
-const treeItemPopupElements = document.querySelectorAll('.tree-item__popup');
-
-treeItemPopupElements.forEach(image => {
-   image.addEventListener('click', () => {
+   if (treeItemPopup) {
       popupContainerElement.classList.remove('hidden');
       popupElement.innerHTML = `
       <button type="button" class="popup__close"><i class="fas fa-times"></i></button>
-      <img src="http://contest.elecard.ru/frontend_data/animals/bee-5749361__480.jpg" alt="Parent">
-   `
-   });
-})
+      <img src="${treeItemPopup.src}" alt="${treeItemPopup.alt}">`
+   }
+}
 
+
+cardsElement.addEventListener('click', removeCards);
+resetButton.addEventListener('click', reset);
+sortVoteElement.addEventListener('change', changeSortType);
+treeElement.addEventListener('click', treeElementClickHandler);
+
+
+document.addEventListener("DOMContentLoaded", changeSortType);
+
+const popupContainerElement = document.querySelector('.popup__container');
+const popupElement = document.querySelector('.popup');
 
 document.body.addEventListener('click', (event) => {
    if (event.target.closest('.popup__close') || event.target.classList.contains('popup__container')) {

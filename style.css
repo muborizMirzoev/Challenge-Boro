@@ -355,11 +355,6 @@ body {
     cursor: pointer;
 }
 
-.tree-item a i {
-    margin-right: 0.5rem;
-    color: #3498db;
-}
-
 .caret {
     cursor: pointer;
     user-select: none;
@@ -376,6 +371,9 @@ body {
     transform: rotate(90deg);
 }
 
+.trigger {
+    display: inline-block;
+}
 
 /*POPUP*/
 
