@@ -2,12 +2,18 @@ import {PaginationButton} from './js/pagination.js'
 
 const cardsElement = document.querySelector('.cards');
 const resetButton = document.querySelector('.reset-button');
+const cardsTypeVoteElement = document.querySelector('.cards-type__vote');
 const sortVoteElement = document.querySelector('.sort__vote');
 const treeElement = document.querySelector('.tree');
+const popupContainerElement = document.querySelector('.popup__container');
+const popupElement = document.querySelector('.popup');
+
 
 const baseUlr = 'http://contest.elecard.ru/frontend_data/';
 
 let cards = [];
+let currentCardsType;
+let currentPage;
 
 async function fetchCards(url) {
    try {
@@ -22,8 +28,6 @@ async function fetchCards(url) {
       console.log(error);
    }
 }
-
-// sortCards();
 
 async function sortCards(type = 'category') {
    try {
@@ -46,23 +50,21 @@ async function sortCards(type = 'category') {
          cards.sort((a, b) => parseName(a.image) > parseName(b.image) ? 1 : -1);
          break;
    }
-   renderCards(cards)
+   renderCards(cards, currentPage, currentCardsType)
 }
-
 
 const paginationButtons = new PaginationButton(33, 10);
 paginationButtons.render();
-paginationButtons.onChange(e => {
-   console.log('paginationButtons', e.target.value);
+paginationButtons.onChange(event => {
    cardsElement.innerHTML = '';
    treeElement.innerHTML = '';
-   renderCards(cards, e.target.value);
+   currentPage = event.target.value;
+   renderCards(cards, event.target.value, currentCardsType);
 });
 
-function renderCards(cards, page = 1, cardsType = 'tree-list') {
-   const showCardsFrom = ((page - 1) * 20)
+function renderCards(cards, page = 1, cardsType = 'card') {
+   const showCardsFrom = ((page - 1) * 20);
    const showCardsTo = page * 20 - 1;
-
 
    cardsElement.innerHTML = '';
    treeElement.innerHTML = '';
@@ -125,7 +127,8 @@ function renderCards(cards, page = 1, cardsType = 'tree-list') {
 }
 
 function reset() {
-   localStorage.clear()
+   localStorage.clear();
+   renderCards(cards);
 }
 
 function removeCards(event) {
@@ -191,39 +194,42 @@ function capitalize(str) {
    return str[0].toUpperCase() + str.slice(1);
 }
 
+function cardsChangeTypeHandler(event) {
+   const type = event.target.value;
+   currentCardsType = type;
+   renderCards(cards, currentPage, type);
+}
+
 function changeSortType(event) {
    const type = event.target.value;
    sortCards(type);
 }
 
 function treeElementClickHandler(event) {
-   const trigger = event.target.closest('.trigger');
-   const treeItemPopup = event.target.closest('.tree-item__popup');
+   const triggerElement = event.target.closest('.trigger');
+   const treeItemPopupElement = event.target.closest('.tree-item__popup');
 
-   if (trigger) {
-      trigger.nextElementSibling.classList.toggle('open');
-      trigger.firstElementChild.classList.toggle('caret-down');
+   if (triggerElement) {
+      triggerElement.nextElementSibling.classList.toggle('open');
+      triggerElement.firstElementChild.classList.toggle('caret-down');
    }
 
-   if (treeItemPopup) {
+   if (treeItemPopupElement) {
       popupContainerElement.classList.remove('hidden');
       popupElement.innerHTML = `
       <button type="button" class="popup__close"><i class="fas fa-times"></i></button>
-      <img src="${treeItemPopup.src}" alt="${treeItemPopup.alt}">`
+      <img src="${treeItemPopupElement.src}" alt="${treeItemPopupElement.alt}">`
    }
 }
 
 
 cardsElement.addEventListener('click', removeCards);
 resetButton.addEventListener('click', reset);
+cardsTypeVoteElement.addEventListener('change', cardsChangeTypeHandler);
 sortVoteElement.addEventListener('change', changeSortType);
 treeElement.addEventListener('click', treeElementClickHandler);
-
-
 document.addEventListener("DOMContentLoaded", changeSortType);
 
-const popupContainerElement = document.querySelector('.popup__container');
-const popupElement = document.querySelector('.popup');
 
 document.body.addEventListener('click', (event) => {
    if (event.target.closest('.popup__close') || event.target.classList.contains('popup__container')) {
