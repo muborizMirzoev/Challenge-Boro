@@ -15,7 +15,48 @@
   <title>Elecard</title>
 </head>
 <body>
-<header class="header"></header>
+<header class="site-header">
+  <div class="wrapper site-header__wrapper">
+    <div class="site-header__start">
+      <nav class="nav">
+        <button class="nav__toggle" aria-expanded="false" type="button">
+          Menu
+        </button>
+        <ul class="nav__wrapper">
+          <li class="nav__item"><a href="#">One</a></li>
+          <li class="nav__item"><a href="#">Two</a></li>
+          <li class="nav__item"><a href="#">Three</a></li>
+          <li class="nav__item"><a href="#">Four</a></li>
+          <li class="nav__item"><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="brand">Elecard</a>
+      <div class="search">
+        <button class="search__toggle" aria-label="Open search">
+          Search
+        </button>
+        <form class="search__form" action="">
+          <label class="sr-only" for="search">Search</label>
+          <input
+            type="search"
+            name=""
+            id="search"
+            placeholder="What's on your mind?"
+          />
+        </form>
+      </div>
+    </div>
+    <div class="site-header__end">
+      <ul class="sub-nav">
+        <li class=""><a href="#">One</a></li>
+        <li class=""><a href="#">Two</a></li>
+        <li class=""><a href="#">Three</a></li>
+        <li class=""><a href="#">Four</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
 <main class="main">
   <section class="filters">
     <h2 class="filters__header">Filters</h2>
@@ -78,5 +119,6 @@
 <footer></footer>
 
 <script type="module" src="index.js"></script>
+<script defer src="./js/header.js"></script>
 </body>
 </html>
