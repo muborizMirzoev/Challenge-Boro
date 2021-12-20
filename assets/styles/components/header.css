@@ -95,12 +95,12 @@
     font-size: 0;
     width: 34px;
     height: 34px;
-    background: url("../../assets/images/icons8-search.svg") center/22px no-repeat;
+    background: url("../../images/icons8-search.svg") center/22px no-repeat;
     border: 0;
 }
 
 .search__toggle.active {
-    background: url("../../assets/images/icons8-search.svg") center/22px no-repeat;
+    background: url("../../images/icons8-search.svg") center/22px no-repeat;
 }
 
 .search__form.active {
