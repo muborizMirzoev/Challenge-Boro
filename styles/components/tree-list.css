@@ -1,9 +1,12 @@
+
+
 .tree-parent {
     margin-top: 0.5rem;
     display: none;
 }
 
 .tree-parent.open {
+    transition: all 2s linear;
     display: block;
 }
 

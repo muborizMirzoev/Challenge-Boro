@@ -12,9 +12,19 @@ class AppType extends Helper {
       this.treeElement.addEventListener('click', this.treeElementClickHandler.bind(this));
    }
 
-   render(cards, page = 1, cardsType = 'card') {
-      const showCardsFrom = ((page - 1) * 20);
-      const showCardsTo = page * 20 - 1;
+   render(cards, searchResultData = null, page = 1, cardsType = 'card') {
+      let showCardsFrom = ((page - 1) * 20);
+      let showCardsTo = page * 20 - 1;
+
+      if (searchResultData) {
+         if (searchResultData.length === 0) {
+            this.cardsElement.innerHTML = `<p>Nothing find</p>`;
+            this.treeElement.innerHTML = `<p>Nothing find</p>`
+         } else {
+            showCardsFrom = 0;
+            showCardsTo = searchResultData.length - 1;
+         }
+      }
 
       this.cardsElement.innerHTML = '';
       this.treeElement.innerHTML = '';

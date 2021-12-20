@@ -4,29 +4,31 @@ import AppType from "./appType.js";
 import {PaginationButton} from "./pagination.js";
 
 class Filter extends Helper {
-   constructor() {
+   constructor(options) {
       super();
       this.cards = [];
       this.currentPage = 1;
       this.currentCardsType = 'card'
 
-      this.paginationButtons = new PaginationButton(33, 10);
-      this.appType = new AppType(document.querySelector('.cards'), document.querySelector('.tree'));
-      this.resetButton = document.querySelector('.reset-button');
-      this.cardsTypeVoteElement = document.querySelector('.cards-type__vote');
-      this.sortVoteElement = document.querySelector('.sort__vote');
+      this.cardsTypeVoteElement = options.cardsTypeVoteElement;
+      this.sortVoteElement = options.sortVoteElement;
+      this.resetButtonElement = options.resetButtonElement;
+      this.searchFormElement = options.searchFormElement;
 
+      this.paginationButtons = new PaginationButton(33, 5);
+      this.appType = new AppType(document.querySelector('.cards'), document.querySelector('.tree'));
 
       this.paginationButtons.onChange(event => {
          this.appType.cardsElement.innerHTML = '';
          this.appType.treeElement.innerHTML = '';
          this.currentPage = event.target.value;
-         this.appType.render(this.cards, event.target.value, this.currentCardsType);
+         this.appType.render(this.cards, null, event.target.value, this.currentCardsType);
       });
 
-      this.resetButton.addEventListener('click', this.appResetHandler.bind(this));
+      this.resetButtonElement.addEventListener('click', this.appResetHandler.bind(this));
       this.cardsTypeVoteElement.addEventListener('change', this.cardsChangeTypeHandler.bind(this));
       this.sortVoteElement.addEventListener('change', this.sortTypeChangeHandler.bind(this));
+      this.searchFormElement.addEventListener('submit', this.cardsSearchHandler.bind(this));
 
       this.paginationButtons.render();
       document.addEventListener("DOMContentLoaded", this.sortTypeChangeHandler.bind(this));
@@ -53,7 +55,7 @@ class Filter extends Helper {
             this.cards.sort((a, b) => this.parseName(a.image) > this.parseName(b.image) ? 1 : -1);
             break;
       }
-      this.appType.render(this.cards, this.currentPage, this.currentCardsType)
+      this.appType.render(this.cards, null, this.currentPage, this.currentCardsType)
    }
 
    appResetHandler() {
@@ -69,10 +71,23 @@ class Filter extends Helper {
    cardsChangeTypeHandler(event) {
       const type = event.target.value;
       this.currentCardsType = type;
-      this.appType.render(this.cards, this.currentPage, type);
+      this.appType.render(this.cards, null, this.currentPage, type);
    }
 
+   cardsSearchHandler(event) {
+      event.preventDefault();
+      const inputValue = this.searchFormElement.querySelector('.search__form-input').value;
 
+      const searchResultCards = this.cards.filter(card => {
+         const name = this.parseName(card.image);
+         const regex = new RegExp(inputValue, 'gi');
+         return regex.test(name);
+      });
+
+      console.log(searchResultCards)
+      this.appType.render(searchResultCards, searchResultCards);
+
+   }
 }
 
 export default Filter
