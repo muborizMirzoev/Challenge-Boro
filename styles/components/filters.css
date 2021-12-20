@@ -1,0 +1,21 @@
+.filters__header {
+    margin-bottom: 20px;
+}
+
+.filters__item h3 {
+    margin-bottom: 15px;
+}
+
+.filters__form {
+    margin-bottom: 20px;
+}
+
+.filters__form-button {
+    padding: 0.7rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #e3dede;
+    color: #180a23;
+}

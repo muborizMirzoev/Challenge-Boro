@@ -1,0 +1,72 @@
+@import "reset.css";
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #31123f;
+    background-color: #ffffff;
+    font-size: 16px;
+}
+
+.main {
+    padding: 16px;
+}
+
+.vote {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/*CUSTOM RADIO INPUT*/
+.vote__container {
+    display: block;
+    position: relative;
+    padding-left: 27px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.vote__container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.vote__checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.vote__container:hover input ~ .vote__checkmark {
+    background-color: #ccc;
+}
+
+.vote__container input:checked ~ .vote__checkmark {
+    background-color: #31123f;
+}
+
+.vote__checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.vote__container input:checked ~ .vote__checkmark:after {
+    display: block;
+}
+
+.vote__container .vote__checkmark:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
