@@ -1,0 +1,23 @@
+{
+  "name": "challenge-boro",
+  "version": "1.0.0",
+  "description": "Сделать страницу с шапкой и футером во всю ширину страницы, которые при прокрутке остаются на месте.\r Страница должна отображать контент в двух видах: в виде карточек и в виде древовидного списка, повторяющего структуру входных данных. Переключение между видами радиобатоном.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muborizMirzoev/Challenge-Boro.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muborizMirzoev/Challenge-Boro/issues"
+  },
+  "homepage": "https://github.com/muborizMirzoev/Challenge-Boro#readme",
+  "devDependencies": {
+    "browser-sync": "^2.27.7"
+  }
+}
